@@ -103,3 +103,6 @@ ORDER BY cat_name
 
 -- Q10. Afficher l'organigramme hiérarchique (nom et prénom et poste des employés) du magasin de Compiègne, classer par ordre alphabétique. Afficher le nom et prénom des employés, éventuellement le poste (si vous y parvenez).
 
+SELECT
+    CONCAT(emp_lastname, ' ', emp_firstname) AS Employé,
+    CONCAT(emp_lastname, ' ', emp_firstname) AS Supérieur
