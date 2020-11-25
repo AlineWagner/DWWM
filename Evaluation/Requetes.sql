@@ -96,13 +96,69 @@ SELECT
     cat_id,
     cat_name,
     pro_name
-FROM categories
+FROM `categories`
 INNER JOIN products ON pro_id = pro_id
 ORDER BY cat_name
 
 
 -- Q10. Afficher l'organigramme hiérarchique (nom et prénom et poste des employés) du magasin de Compiègne, classer par ordre alphabétique. Afficher le nom et prénom des employés, éventuellement le poste (si vous y parvenez).
-
+/*
 SELECT
     CONCAT(emp_lastname, ' ', emp_firstname) AS Employé,
     CONCAT(emp_lastname, ' ', emp_firstname) AS Supérieur
+*/
+
+-- Q11. Quel produit a été vendu avec la remise la plus élevée ? Afficher le montant de la remise, le numéro et le nom du produit, le numéro de commande et de ligne de commande.
+
+SELECT
+    MAX(ode_discount),
+    pro_id,
+    pro_name,
+    ord_id,
+    ode_id
+FROM `orders_details`
+INNER JOIN products ON pro_id = pro_id
+INNER JOIN orders ON ord_id = ord_id
+
+
+-- Q12.
+-- Q13. Combien y-a-t-il de clients canadiens ? Afficher dans une colonne intitulée 'Nb clients Canada'
+
+SELECT
+    COUNT(cus_countries_id) AS `Nb clients Canada`
+FROM `customers`
+WHERE cus_countries_id LIKE 'CA'
+GROUP BY cus_countries_id
+
+
+-- Q16. Afficher le détail des commandes de 2020.
+
+SELECT
+    ode_id,
+    ode_unit_price,
+    ode_discount,
+    ode_quantity,
+    ode_ord_id,
+    ode_pro_id,
+    ord_order_date
+FROM `orders_details`
+INNER JOIN orders ON ode_ord_id = ord_id
+WHERE ord_order_date LIKE '2020%'
+GROUP BY ode_ord_id
+
+
+-- Q17. Afficher les coordonnées des fournisseurs pour lesquels des commandes ont été passées.
+
+SELECT *
+FROM `suppliers`
+INNER JOIN products ON pro_sup_id = sup_id
+INNER JOIN orders_details ON ode_ord_id = ode_ord_id
+INNER JOIN orders ON ode_id = ode_id
+WHERE sup_id NOT IN
+    (SELECT ode_pro_id
+    FROM orders_details)
+GROUP BY sup_id
+
+
+-- Q18. Quel est le chiffre d'affaires de 2020 ?
+
