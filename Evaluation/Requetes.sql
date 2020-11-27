@@ -18,7 +18,7 @@ SELECT
 FROM `customers`
 WHERE cus_countries_id NOT IN
     (SELECT cou_id FROM countries WHERE cou_name = 'France')
-ORDER BY cus_countries_id
+ORDER BY cus_countries_id;
 
 
 -- Q3. Afficher par ordre alphabétique les villes de résidence des clients ainsi que le code (ou le nom) du pays.
@@ -30,7 +30,7 @@ SELECT
 FROM
     `customers`
 INNER JOIN countries ON cus_countries_id = cou_id
-ORDER BY cus_city
+ORDER BY cus_city;
 
 
 -- Q4. Afficher le nom des clients dont les fiches ont été modifiées
@@ -39,7 +39,7 @@ SELECT
     cus_lastname,
     cus_update_date
 FROM `customers`
-WHERE cus_update_date IS NOT NULL
+WHERE cus_update_date IS NOT NULL;
 
 
 -- Q5. La commerciale Coco Merce veut consulter la fiche d'un client, mais la seule chose dont elle se souvienne est qu'il habite une ville genre 'divos'. Pouvez-vous l'aider ?
@@ -50,7 +50,7 @@ SELECT
     cus_firstname,
     cus_city
 FROM `customers`
-WHERE cus_city LIKE '%divos%'
+WHERE cus_city LIKE '%divos%';
 
 
 -- Q6. Quel est le produit vendu le moins cher ? Afficher le prix, l'id et le nom du produit.
@@ -59,7 +59,7 @@ SELECT
     pro_id,
     pro_name,
     MIN(pro_price)
-FROM `products`
+FROM `products`;
 
 
 -- Q7. Lister les produits qui n'ont jamais été vendus
@@ -71,7 +71,7 @@ SELECT
 FROM `products`
 WHERE pro_id NOT IN
     (SELECT ode_pro_id
-    FROM orders_details)
+    FROM orders_details);
 
 
 -- Q8. Afficher les produits commandés par Madame Pikatchien.
@@ -87,7 +87,7 @@ FROM `products`
 INNER JOIN customers ON cus_id = cus_id
 INNER JOIN orders ON ord_id = ord_id
 INNER JOIN orders_details ON ode_id = ode_id
-WHERE cus_lastname LIKE 'Pikatchien'
+WHERE cus_lastname LIKE 'Pikatchien';
 
 
 -- Q9. Afficher le catalogue des produits par catégorie, le nom des produits et de la catégorie doivent être affichés.
@@ -98,7 +98,7 @@ SELECT
     pro_name
 FROM `categories`
 INNER JOIN products ON pro_id = pro_id
-ORDER BY cat_name
+ORDER BY cat_name;
 
 
 -- Q10. Afficher l'organigramme hiérarchique (nom et prénom et poste des employés) du magasin de Compiègne, classer par ordre alphabétique. Afficher le nom et prénom des employés, éventuellement le poste (si vous y parvenez).
@@ -118,7 +118,7 @@ SELECT
     ode_id
 FROM `orders_details`
 INNER JOIN products ON pro_id = pro_id
-INNER JOIN orders ON ord_id = ord_id
+INNER JOIN orders ON ord_id = ord_id;
 
 
 -- Q12.
@@ -128,7 +128,7 @@ SELECT
     COUNT(cus_countries_id) AS `Nb clients Canada`
 FROM `customers`
 WHERE cus_countries_id LIKE 'CA'
-GROUP BY cus_countries_id
+GROUP BY cus_countries_id;
 
 
 -- Q16. Afficher le détail des commandes de 2020.
@@ -144,7 +144,7 @@ SELECT
 FROM `orders_details`
 INNER JOIN orders ON ode_ord_id = ord_id
 WHERE ord_order_date LIKE '2020%'
-GROUP BY ode_ord_id
+GROUP BY ode_ord_id;
 
 
 -- Q17. Afficher les coordonnées des fournisseurs pour lesquels des commandes ont été passées.
@@ -157,8 +157,55 @@ INNER JOIN orders ON ode_id = ode_id
 WHERE sup_id NOT IN
     (SELECT ode_pro_id
     FROM orders_details)
-GROUP BY sup_id
+GROUP BY sup_id;
 
 
 -- Q18. Quel est le chiffre d'affaires de 2020 ?
 
+SELECT SUM(ode_unit_price*ode_quantity-(ode_discount*(ode_unit_price*ode_quantity)/100)) AS 'Montant Ventes 2020'
+FROM `orders_details`
+INNER JOIN orders ON ode_ord_id = ord_id
+WHERE ord_order_date LIKE '2020%';
+
+
+-- Q19. Quel est le panier moyen ?
+/*
+SELECT AVG(ode_unit_price) AS 'Panier moyen'
+FROM orders_details
+*/
+
+-- Q20. Lister le total de chaque commande par total décroissant (Afficher numéro de commande, date, total et nom du client).
+
+SELECT
+    ord_id,
+    ord_order_date,
+    SUM(ode_unit_price*ode_quantity-(ode_discount*(ode_unit_price*ode_quantity)/100)) AS 'Total',
+    CONCAT(cus_lastname, cus_firstname)
+FROM `orders`
+INNER JOIN orders_details ON ode_ord_id = ord_id
+INNER JOIN customers ON ord_cus_id = cus_id
+GROUP BY cus_id
+ORDER BY `Total` ASC;
+
+
+-- Q22. La version 2020 du produit barb004 s'appelle désormais Camper et, bonne nouvelle, son prix subit une baisse de 10%.
+
+UPDATE products
+SET pro_name = 'Camper'
+WHERE pro_ref = 'barb004';
+
+
+-- Q23. L'inflation en France en 2019 a été de 1,1%, appliquer cette augmentation à la gamme de parasols.
+
+UPDATE products
+SET pro_price = SUM(pro_price*(1.1*pro_price/100))
+WHERE cat_id = 25;
+
+-- Q24. Supprimer les produits non vendus de la catégorie "Tondeuses électriques". Vous devez utilisez une sous-requête sans indiquer de valeurs de clés.
+
+DELETE FROM products
+INNER JOIN orders_details ON ode_pro_id = pro_id
+WHERE pro_cat_id = 9
+AND pro_id NOT IN
+    (SELECT ode_pro_id
+    FROM orders_details);
