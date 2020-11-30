@@ -1,0 +1,3 @@
+cd C:\wamp64\bin\mysql\mysql8.0.21\bin
+
+mysqldump --user=root --password= --databases afpa_gescom > C:\Users\*****\Desktop\Backup\backup_afpa_gescom.sql
