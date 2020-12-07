@@ -47,14 +47,7 @@ DELIMITER ;
 -- Présentez le déclencheur after_products_update demandé dans la phase 2 de la séance sur les déclencheurs.
 --Créer un déclencheur after_products_update sur la table products : lorsque le stock physique devient inférieur au stock d'alerte, une nouvelle ligne est insérée dans la table commander_articles.
 
-CREATE TABLE commander_articles
-(
-    codart INT,
-    qte INT,
-    date DATE
-)
-
-
+/*
 CREATE TRIGGER after_products_update
 AFTER UPDATE ON products
 AS
@@ -66,10 +59,47 @@ IF UPDATE(pro_stock)
             codart = pro_id,
             qte = SUM(pro_stock_alert - pro_stock)
         FROM commander_articles
-        JOIN products ON codart = pro_id
-    END
-END
+        JOIN products ON codart = pro_id;
+    END;
+END IF;
 
+---
+
+CREATE TRIGGER after_products_update
+AFTER UPDATE ON products
+FOR EACH ROW
+BEGIN
+IF new.pro_stock < old.pro_stock_alert THEN
+    INSERT INTO commander_articles(codart, qte, date)
+    VALUES(pro_id, SUM(pro_stock_alert - pro_stock), pro_update_date);
+END IF;
+END;
+
+---
+
+CREATE TRIGGER after_products_update
+AFTER UPDATE ON products
+FOR EACH ROW
+BEGIN
+INSERT INTO commander_articles (codart, qte, date)
+    VALUES pro_id, SUM(pro_stock_alert - pro_stock), pro_update_date
+    FROM products
+    WHERE pro_id = codart
+    AND new.pro_stock < pro_stock_alert;
+END;
+*/
+
+DELIMITER |
+CREATE TRIGGER after_products_update
+AFTER UPDATE ON products
+FOR EACH ROW
+BEGIN
+    IF new.pro_stock < new.pro_stock_alert THEN
+        INSERT INTO commander_articles(codart, qte, `date`)
+        VALUES (new.pro_id, (new.pro_stock_alert - new.pro_stock), new.pro_update_date);
+    END IF;
+END |
+DELIMITER ;
 
 
 -- Amity HANAH, Manageuse au sein du magasin d'Arras, vient de prendre sa retraite. Il a été décidé, après de nombreuses tractations, de confier son poste au pépiniériste le plus ancien en poste dans ce magasin. Ce dernier voit alors son salaire augmenter de 5% et ses anciens collègues pépiniéristes passent sous sa direction.
