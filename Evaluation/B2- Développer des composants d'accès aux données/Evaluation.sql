@@ -17,7 +17,6 @@ WHERE pro_cat_id = cat_id
 -- Date facture, numéro, date vente, ID cus, ID vendeur, numéro bon de commande, produit, quantité, prix, discount, total, date paiement
 
 DELIMITER |
-
 CREATE PROCEDURE infosFacture
 BEGIN
     SELECT
@@ -38,9 +37,7 @@ BEGIN
     INNER JOIN products ON pro_id = ode_pro_id
     INNER JOIN suppliers ON sup_id = pro_sup_id
     WHERE ord_id = ord_id
-
 END |
-
 DELIMITER ;
 
 
