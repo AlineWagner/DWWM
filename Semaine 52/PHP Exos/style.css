@@ -1,0 +1,16 @@
+@media (min-width: 1200px){
+    .container {
+        width: 1170px;
+    }
+}
+
+.coSpo {
+    background-color: #525252;
+    color: #fff;
+    width: 750px;
+    border-radius: 5px;
+    margin-left: 50px;
+    padding-left: 25px;
+    overflow: auto;
+    word-break: break-all;
+}
