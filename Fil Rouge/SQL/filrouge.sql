@@ -12,7 +12,7 @@ CREATE TABLE Employees(
 );
 
 CREATE TABLE Countries(
-   cou_id VARCHAR(50),
+   cou_id VARCHAR(2) NOT NULL,
    cou_name VARCHAR(50) NOT NULL,
    PRIMARY KEY(cou_id)
 );
