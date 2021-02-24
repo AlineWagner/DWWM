@@ -7,7 +7,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `countries`;
 CREATE TABLE IF NOT EXISTS `countries`(
    `cou_id` VARCHAR(2) NOT NULL,
-   `cou_name` text(10) NOT NULL,
+   `cou_name` VARCHAR(10) NOT NULL,
     PRIMARY KEY (`cou_id`)
 );
 

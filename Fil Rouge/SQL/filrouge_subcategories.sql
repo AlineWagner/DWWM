@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS `subcategories`;
 CREATE TABLE IF NOT EXISTS `subcategories`(
    `cat_id` INT NOT NULL,
    `subcat_id` INT NOT NULL,
-   `subcat_name` text(50) NOT NULL,
+   `subcat_name` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`subcat_id`),
     FOREIGN KEY (`cat_id`) REFERENCES Categories (`cat_id`)
 );

@@ -1,28 +1,31 @@
-DROP DATABASE FilRouge IF EXISTS;
-CREATE DATABASE FilRouge;
-USE FilRouge;
-
-
-CREATE table SubCategories(
-    cat_id INT,
-    subcat_id INT,
+CREATE TABLE SubCategories(
+    cat_id INT NOT NULL,
+    subcat_id INT NOT NULL,
     subcat_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (subcat_id),
     FOREIGN KEY (cat_id) REFERENCES Categories (cat_id)
 );
 
 CREATE TABLE Categories(
-   cat_id INT,
+   cat_id INT NOT NULL,
    cat_name VARCHAR(50) NOT NULL,
    PRIMARY KEY (cat_id)
 );
 
 CREATE TABLE Employees(
-   emp_id INT,
-   emp_ref INT NOT NULL,
+   emp_id INT NOT NULL,
+   pos_id INT NOT NULL,
+   emp_ref VARCHAR(10) NOT NULL,
    emp_surname VARCHAR(50) NOT NULL,
    emp_name VARCHAR(50) NOT NULL,
-   PRIMARY KEY (emp_id)
+   PRIMARY KEY (emp_id),
+   FOREIGN KEY (pos_id) REFERENCES Positions (pos_id)
+);
+
+CREATE TABLE Positions(
+   pos_id INT NOT NULL,
+   pos_name VARCHAR(50) NOT NULL,
+   PRIMARY KEY (pos_id)
 );
 
 CREATE TABLE Countries(
@@ -32,7 +35,7 @@ CREATE TABLE Countries(
 );
 
 CREATE TABLE Delivery(
-   deli_id INT,
+   deli_id INT NOT NULL,
    deli_nbr INT NOT NULL,
    deli_ref VARCHAR(50) NOT NULL,
    deli_desc VARCHAR(50) NOT NULL,
@@ -40,7 +43,7 @@ CREATE TABLE Delivery(
 );
 
 CREATE TABLE Suppliers(
-   sup_id INT,
+   sup_id INT NOT NULL,
    sup_ref VARCHAR(50) NOT NULL,
    sup_name VARCHAR(50) NOT NULL,
    sup_address VARCHAR(50) NOT NULL,
@@ -54,8 +57,8 @@ CREATE TABLE Suppliers(
 );
 
 CREATE TABLE Clients(
-   cli_id INT,
-   cli_ref VARCHAR(50) NOT NULL,
+   cli_id INT NOT NULL,
+   cli_ref VARCHAR(10) NOT NULL,
    cli_surname VARCHAR(50) NOT NULL,
    cli_name VARCHAR(50) NOT NULL,
    cli_billaddress VARCHAR(50) NOT NULL,
@@ -78,7 +81,7 @@ CREATE TABLE Clients(
 );
 
 CREATE TABLE Sales(
-   sales_id INT,
+   sales_id INT NOT NULL,
    sales_num INT NOT NULL,
    sales_state VARCHAR(50) NOT NULL,
    sales_billadd VARCHAR(50) NOT NULL,
@@ -94,7 +97,7 @@ CREATE TABLE Sales(
 );
 
 CREATE TABLE Products(
-   pro_id INT,
+   pro_id INT NOT NULL,
    pro_name VARCHAR(50) NOT NULL,
    pro_label VARCHAR(50) NOT NULL,
    pro_desc VARCHAR(50) NOT NULL,
@@ -110,7 +113,7 @@ CREATE TABLE Products(
 );
 
 CREATE TABLE Order_Details(
-   orde_id INT,
+   orde_id INT NOT NULL,
    orde_quantity INT NOT NULL,
    sales_id INT NOT NULL,
    pro_id INT NOT NULL,
@@ -120,8 +123,8 @@ CREATE TABLE Order_Details(
 );
 
 CREATE TABLE Delivered(
-   orde_id INT,
-   deli_id INT,
+   orde_id INT NOT NULL,
+   deli_id INT NOT NULL,
    quantity INT NOT NULL,
    deliadd VARCHAR(50) NOT NULL,
    delidate DATE NOT NULL,
