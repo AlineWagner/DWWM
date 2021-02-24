@@ -1,9 +1,14 @@
+DROP DATABASE FilRouge IF EXISTS;
+CREATE DATABASE FilRouge;
+USE FilRouge;
+
+
 CREATE table SubCategories(
     cat_id INT,
     subcat_id INT,
     subcat_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY  (subcat_id),
-    FOREIGN KEY  (cat_id) REFERENCES Categories (cat_id)
+    PRIMARY KEY (subcat_id),
+    FOREIGN KEY (cat_id) REFERENCES Categories (cat_id)
 );
 
 CREATE TABLE Categories(

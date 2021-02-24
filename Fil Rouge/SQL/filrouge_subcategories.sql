@@ -6,9 +6,11 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `subcategories`;
 CREATE TABLE IF NOT EXISTS `subcategories`(
-   `subcat_id` VARCHAR(2) NOT NULL,
-   `subcat_name` text(10) NOT NULL,
-    PRIMARY KEY (`subcat_id`)
+   `cat_id` INT NOT NULL,
+   `subcat_id` INT NOT NULL,
+   `subcat_name` text(50) NOT NULL,
+    PRIMARY KEY (`subcat_id`),
+    FOREIGN KEY (`cat_id`) REFERENCES Categories (`cat_id`)
 );
 
 
@@ -24,7 +26,7 @@ INSERT INTO `subcategories` (`cat_id`, `subcat_id`, `subcat_name`) VALUES
 (3, 13, 'Violon'), (3, 14, 'Violoncelle'), (3, 15, 'Alto'), (3, 16, 'Contrebasse'),
 
 /*Vents*/
-(4, 17, 'Clarinette'), (4, 18, 'Flûte à bec'), (4, 19, 'Flûte traversière'), (4, 20, 'Saxophone'), (4, 21, 'Trombone'), (4, 22, 'Trompette'), (4, 23, 'Entretien des instruments à vent'),
+(4, 17, 'Clarinette'), (4, 18, 'Flûte à bec'), (4, 19, 'Flûte traversière'), (4, 20, 'Harmonica, Kazoo, Sifflet'), (4, 21, 'Saxophone'), (4, 22, 'Trombone'), (4, 23, 'Trompette'),
 
 /*Batteries & Percussions*/
 (5, 24, 'Batterie Acoustique'), (5, 25, 'Batterie Electronique'), (5, 26, 'Percussions'),
@@ -51,4 +53,4 @@ INSERT INTO `subcategories` (`cat_id`, `subcat_id`, `subcat_name`) VALUES
 (12, 47, 'Jeux de lumière'), (12, 48, 'Projecteur'), (12, 49, 'Laser'), (12, 50, 'Eclairage de Scène'),
 
 /*Câbles & Accessoires*/
-(13, 51, 'Accordeur / Métronome / Pupitre'), (13, 52, 'Alimentation & Stockage'), (13, 53, 'Câblerie'), (54, 'Outillage');
+(13, 51, 'Accordeur / Métronome / Pupitre'), (13, 52, 'Alimentation & Stockage'), (13, 53, 'Câblerie'), (13, 54, 'Outillage'), (13, 55, 'Entretien des instruments');
