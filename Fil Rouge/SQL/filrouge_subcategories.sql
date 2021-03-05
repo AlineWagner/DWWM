@@ -6,7 +6,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `subcategories`;
 CREATE TABLE IF NOT EXISTS `subcategories`(
-   `cat_id` INT NOT NULL,
+   `cat_id` INT NOT NULL auto_increment,
    `subcat_id` INT NOT NULL,
    `subcat_name` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`subcat_id`),

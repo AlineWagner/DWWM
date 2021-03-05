@@ -6,7 +6,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories`(
-   `cat_id` INT NOT NULL,
+   `cat_id` INT NOT NULL auto_increment,
    `cat_name` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`cat_id`)
 );

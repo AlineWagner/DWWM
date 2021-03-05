@@ -44,7 +44,6 @@ CREATE TABLE Delivery(
 
 CREATE TABLE Suppliers(
    sup_id INT NOT NULL,
-   sup_ref VARCHAR(50) NOT NULL,
    sup_name VARCHAR(50) NOT NULL,
    sup_address VARCHAR(50) NOT NULL,
    sup_city VARCHAR(50) NOT NULL,
@@ -101,14 +100,12 @@ CREATE TABLE Products(
    pro_name VARCHAR(50) NOT NULL,
    pro_label VARCHAR(50) NOT NULL,
    pro_desc VARCHAR(50) NOT NULL,
-   pro_cat VARCHAR(50) NOT NULL,
    pro_price DECIMAL(5,2) NOT NULL,
-   pro_sup_ref VARCHAR(10) NOT NULL,
    pro_pic VARCHAR(50) NOT NULL,
-   cat_id INT NOT NULL,
+   subcat_id INT NOT NULL,
    sup_id INT NOT NULL,
    PRIMARY KEY (pro_id),
-   FOREIGN KEY (cat_id) REFERENCES Categories (cat_id),
+   FOREIGN KEY (subcat_id) REFERENCES SubCategories (subcat_id),
    FOREIGN KEY (sup_id) REFERENCES Suppliers (sup_id)
 );
 

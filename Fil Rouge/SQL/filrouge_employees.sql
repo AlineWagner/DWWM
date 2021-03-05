@@ -6,7 +6,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `employees`;
 CREATE TABLE IF NOT EXISTS `employees`(
-   `emp_id` INT NOT NULL,
+   `emp_id` INT NOT NULL auto_increment,
    `pos_id` INT NOT NULL,
    `emp_ref` VARCHAR(15) NOT NULL,
    `emp_surname` VARCHAR(50) NOT NULL,
