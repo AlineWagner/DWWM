@@ -67,15 +67,12 @@ CREATE TABLE Clients(
    cli_delicity VARCHAR(50) NOT NULL,
    cli_delizip VARCHAR(10) NOT NULL,
    cli_phone VARCHAR(20) NOT NULL,
-   cli_nickname VARCHAR(50) NOT NULL,
    cli_mail VARCHAR(50) NOT NULL,
    cli_password VARCHAR(50) NOT NULL,
    cli_type TINYINT NOT NULL,
    cli_coeff INT NOT NULL,
-   emp_id INT NOT NULL,
    cou_id VARCHAR(50) NOT NULL,
    PRIMARY KEY (cli_id),
-   FOREIGN KEY (emp_id) REFERENCES Employees (emp_id),
    FOREIGN KEY (cou_id) REFERENCES Countries (cou_id)
 );
 
